@@ -1,0 +1,6 @@
+/target
+/.agent-grid
+/.DS_Store
+*.swp
+/albums-live
+/.env

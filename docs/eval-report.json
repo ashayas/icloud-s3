@@ -1,0 +1,196 @@
+{
+  "timestamp_utc": "2026-10-30T23:50:22.222503+00:00",
+  "all_passed": true,
+  "passed_count": 10,
+  "total_count": 10,
+  "correctness_cases": [
+    {
+      "id": "EVAL-01",
+      "name": "Zero-byte object roundtrip & MD5 ETag",
+      "passed": true,
+      "duration_ms": 1.326375,
+      "details": "0 B -> 560x160 PNG (71176 B), ETag=d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "id": "EVAL-02",
+      "name": "JSON payload + x-amz-meta-* preservation",
+      "passed": true,
+      "duration_ms": 1.236417,
+      "details": "Verified 51 B JSON + 2 custom metadata keys"
+    },
+    {
+      "id": "EVAL-03",
+      "name": "High-entropy 64 KiB binary bit-exact SHA-256",
+      "passed": true,
+      "duration_ms": 2.104584,
+      "details": "65,536 B packed into 560x160 RGB PNG (133268 B), SHA-256 verified"
+    },
+    {
+      "id": "EVAL-04",
+      "name": "1 MiB single-photo payload (<= 2048x2048 limit)",
+      "passed": true,
+      "duration_ms": 13.320625,
+      "details": "1,048,576 B -> 1 photo (1024x406 px, 1247801 B PNG)"
+    },
+    {
+      "id": "EVAL-05",
+      "name": "Multi-photo burst chunking & out-of-order reassembly",
+      "passed": true,
+      "duration_ms": 6.263249999999999,
+      "details": "45,000 B split across 6 photos, reversed, reassembled bit-exact"
+    },
+    {
+      "id": "EVAL-06",
+      "name": "Apple Shared Album 2048px dimension guard",
+      "passed": true,
+      "duration_ms": 13.996416,
+      "details": "All frames across 0 B .. 1 MiB strictly within 2048x2048 px"
+    },
+    {
+      "id": "EVAL-07",
+      "name": "Single-bit RGB pixel corruption detection (CRC32)",
+      "passed": true,
+      "duration_ms": 1.6838339999999998,
+      "details": "1-bit green-channel mutation rejected by CRC32 guard"
+    },
+    {
+      "id": "EVAL-08",
+      "name": "Overwrite compaction (1 active photo per live key)",
+      "passed": true,
+      "duration_ms": 1.268917,
+      "details": "Old photo frame evicted on overwrite; 1 live photo remains"
+    },
+    {
+      "id": "EVAL-09",
+      "name": "Cold-boot state reconstruction from raw PNG files",
+      "passed": true,
+      "duration_ms": 12.49975,
+      "details": "Reconstructed 8 keys across 4 album shards from PNG pixels alone"
+    },
+    {
+      "id": "EVAL-10",
+      "name": "Unmodified `aws s3` CLI end-to-end integration",
+      "passed": true,
+      "duration_ms": 1892.8553749999999,
+      "details": "`aws s3 mb/cp/ls` verified 24 KiB binary (SHA-256 bda93e255ce2…)"
+    }
+  ],
+  "size_benchmarks": [
+    {
+      "label": "1 KiB JSON",
+      "payload_bytes": 1024,
+      "iterations": 40,
+      "frame_dimensions": "560×160",
+      "png_bytes": 72195,
+      "overhead_ratio": 70.5029296875,
+      "put_p50_ms": 0.38837499999999997,
+      "put_p95_ms": 0.611917,
+      "put_ops_per_sec": 2356.6784526119977,
+      "put_mb_per_sec": 2.301443801378904,
+      "get_p50_ms": 0.5269590000000001,
+      "get_p95_ms": 0.585167,
+      "get_ops_per_sec": 1880.3472963849479,
+      "get_mb_per_sec": 1.8362766566259257,
+      "icloud_drive_quota_bytes": 0
+    },
+    {
+      "label": "16 KiB Log Chunk",
+      "payload_bytes": 16384,
+      "iterations": 30,
+      "frame_dimensions": "560×160",
+      "png_bytes": 85123,
+      "overhead_ratio": 5.19549560546875,
+      "put_p50_ms": 0.438792,
+      "put_p95_ms": 0.47766600000000004,
+      "put_ops_per_sec": 2244.759944623269,
+      "put_mb_per_sec": 35.07437413473858,
+      "get_p50_ms": 0.6335,
+      "get_p95_ms": 0.76925,
+      "get_ops_per_sec": 1544.77928965899,
+      "get_mb_per_sec": 24.137176400921717,
+      "icloud_drive_quota_bytes": 0
+    },
+    {
+      "label": "64 KiB SQLite Page",
+      "payload_bytes": 65536,
+      "iterations": 25,
+      "frame_dimensions": "560×160",
+      "png_bytes": 134841,
+      "overhead_ratio": 2.0575103759765625,
+      "put_p50_ms": 0.674542,
+      "put_p95_ms": 0.727958,
+      "put_ops_per_sec": 1465.151317311689,
+      "put_mb_per_sec": 91.57195733198056,
+      "get_p50_ms": 0.774625,
+      "get_p95_ms": 0.891583,
+      "get_ops_per_sec": 1284.2740640852758,
+      "get_mb_per_sec": 80.26712900532974,
+      "icloud_drive_quota_bytes": 0
+    },
+    {
+      "label": "256 KiB Tarball",
+      "payload_bytes": 262144,
+      "iterations": 15,
+      "frame_dimensions": "1024×160",
+      "png_bytes": 379033,
+      "overhead_ratio": 1.4458961486816406,
+      "put_p50_ms": 1.878458,
+      "put_p95_ms": 1.999083,
+      "put_ops_per_sec": 526.0889067104429,
+      "put_mb_per_sec": 131.52222667761072,
+      "get_p50_ms": 1.916625,
+      "get_p95_ms": 2.001083,
+      "get_ops_per_sec": 520.2334752345282,
+      "get_mb_per_sec": 130.05836880863205,
+      "icloud_drive_quota_bytes": 0
+    },
+    {
+      "label": "1 MiB Blob Frame",
+      "payload_bytes": 1048576,
+      "iterations": 8,
+      "frame_dimensions": "1024×406",
+      "png_bytes": 1247801,
+      "overhead_ratio": 1.1899957656860352,
+      "put_p50_ms": 7.2857080000000005,
+      "put_p95_ms": 7.550667,
+      "put_ops_per_sec": 138.15076565744653,
+      "put_mb_per_sec": 138.15076565744653,
+      "get_p50_ms": 4.112666,
+      "get_p95_ms": 4.370833999999999,
+      "get_ops_per_sec": 240.13237537324827,
+      "get_mb_per_sec": 240.13237537324827,
+      "icloud_drive_quota_bytes": 0
+    }
+  ],
+  "sharding_benchmarks": [
+    {
+      "setup": "1 Shared Album (`--shards 1`)",
+      "shards": 1,
+      "concurrency": 8,
+      "total_requests": 24,
+      "simulated_album_sync_ms": 120,
+      "put_req_per_sec": 8.179513509079001,
+      "put_p50_ms": 977.261958,
+      "get_req_per_sec": 1502.0653398422833,
+      "get_p50_ms": 0.624375
+    },
+    {
+      "setup": "8 Shared Albums (`--shards 8`)",
+      "shards": 8,
+      "concurrency": 8,
+      "total_requests": 64,
+      "simulated_album_sync_ms": 120,
+      "put_req_per_sec": 58.013309295579056,
+      "put_p50_ms": 122.61108399999999,
+      "get_req_per_sec": 1694.2590429421869,
+      "get_p50_ms": 0.565375
+    }
+  ],
+  "cold_replay": {
+    "objects_replayed": 50,
+    "total_raw_bytes": 409600,
+    "total_png_bytes": 3917468,
+    "cold_boot_replay_ms": 31.446041,
+    "warm_get_all_ms": 29.447458
+  }
+}
